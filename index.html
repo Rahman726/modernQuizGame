@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ultimate Quiz Challenge</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sound-toggle" id="soundToggle">🔊</div>
+        
+        <div class="notification" id="notification"></div>
+        
+        <!-- Login Screen -->
+        <div id="loginScreen" class="screen active">
+            <h1>Ultimate Quiz Challenge</h1>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password">
+            </div>
+            <button id="loginBtn">Login</button>
+            <p style="text-align: center; margin-top: 15px;">Don't have an account? <a href="#" id="showSignup" style="color: #fdbb2d;">Sign up</a></p>
+        </div>
+        
+        <!-- Signup Screen -->
+        <div id="signupScreen" class="screen">
+            <h1>Create Account</h1>
+            <div class="form-group">
+                <label for="newUsername">Username</label>
+                <input type="text" id="newUsername" placeholder="Choose a username">
+            </div>
+            <div class="form-group">
+                <label for="newPassword">Password</label>
+                <input type="password" id="newPassword" placeholder="Create a password">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm your password">
+            </div>
+            <button id="signupBtn">Sign Up</button>
+            <p style="text-align: center; margin-top: 15px;">Already have an account? <a href="#" id="showLogin" style="color: #fdbb2d;">Login</a></p>
+        </div>
+        
+        <!-- Class Selection Screen -->
+        <div id="classScreen" class="screen">
+            <h1>Select Your Class</h1>
+            <div class="class-selection" id="classSelection"></div>
+            <div class="btn-group">
+                <button id="logoutBtn">Logout</button>
+                <button id="highScoresBtn">High Scores</button>
+                <button id="selectSubjectBtn" disabled>Select Subject</button>
+            </div>
+        </div>
+        
+        <!-- Subject Selection Screen -->
+        <div id="subjectScreen" class="screen">
+            <h1>Choose a Subject</h1>
+            <div class="subject-grid" id="subjectGrid"></div>
+            <div class="btn-group">
+                <button id="backToClassBtn">Back to Classes</button>
+                <button id="selectDifficultyBtn" disabled>Select Difficulty</button>
+            </div>
+        </div>
+        
+        <!-- Difficulty Selection Screen -->
+        <div id="difficultyScreen" class="screen">
+            <h1>Select Difficulty</h1>
+            <div class="difficulty-grid">
+                <div class="difficulty-card easy" data-difficulty="easy">
+                    <h2>Easy</h2>
+                    <p>20 questions</p>
+                    <p>More time per question</p>
+                    <p>Simpler questions</p>
+                </div>
+                <div class="difficulty-card medium" data-difficulty="medium">
+                    <h2>Medium</h2>
+                    <p>20 questions</p>
+                    <p>Moderate time per question</p>
+                    <p>Standard difficulty</p>
+                </div>
+                <div class="difficulty-card hard" data-difficulty="hard">
+                    <h2>Hard</h2>
+                    <p>20 questions</p>
+                    <p>Less time per question</p>
+                    <p>Challenging questions</p>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button id="backToSubjectsBtn">Back to Subjects</button>
+                <button id="startQuizBtn" disabled>Start Quiz</button>
+            </div>
+        </div>
+        
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="screen">
+            <div class="level-indicator">
+                <span>Question: <span id="currentQuestion">1</span>/20</span>
+                <span>Score: <span id="currentScore">0</span></span>
+                <span>Difficulty: <span id="currentDifficulty" class="difficulty-badge easy">Easy</span></span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="questionProgress"></div>
+            </div>
+            <div class="timer" id="timer">60</div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+            <div class="btn-group">
+                <button id="quitQuizBtn">Quit Quiz</button>
+                <button id="nextQuestionBtn" style="display: none;">Next Question</button>
+            </div>
+        </div>
+        
+        <!-- High Scores Screen -->
+        <div id="highScoresScreen" class="screen">
+            <h1>High Scores</h1>
+            <div class="high-scores" id="highScoresList"></div>
+            <div class="btn-group">
+                <button id="backToMenuBtn">Back to Menu</button>
+                <button id="clearScoresBtn">Clear Scores</button>
+            </div>
+        </div>
+        
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen">
+            <h1>Quiz Complete!</h1>
+            <div class="score-display">
+                Your Score: <span id="finalScore">0</span>
+            </div>
+            <div class="level-indicator">
+                Difficulty: <span id="finalDifficulty" class="difficulty-badge easy">Easy</span>
+            </div>
+            <div class="btn-group">
+                <button id="playAgainBtn">Play Again</button>
+                <button id="backToSubjectsBtn2">Back to Subjects</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="backgroundMusic" loop>
+        <source src="audio/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="correctSound">
+        <source src="audio/correct.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrongSound">
+        <source src="audio/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="levelUpSound">
+        <source src="audio/levelup.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="gameOverSound">
+        <source src="audio/gameover.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- JavaScript Files -->
+    <script src="js/questions.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
